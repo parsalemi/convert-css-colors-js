@@ -14,12 +14,17 @@ function number2hex(n: number): string {
   return n.toString(16).padStart(2, '0');
 }
 
-function string2numberArr(rgba: string): number[] {
-  return rgba.replace('(', '').replace(')', '')
-  .replace('rgba', '').replace('rgb', '')
-  .replaceAll(',', '').replace('/', '')
-  .replace('hsl', '').replace('hsla', '').replaceAll('%', '')
-  .split(' ').map(string => parseInt(string));
+function string2numberArr(color: string): number[] {
+  if (!color || typeof color !== 'string') return [];
+
+  let s = color.trim().toLowerCase();
+  s = s.replace(/^rgba?\(/, '').replace(/^hsla?\(/, '').replace(/\)$/, '');
+
+  const tokens = s.split(/[\s,\/]+/);
+
+  const numbers = tokens.map(token => parseFloat(token)).filter(n => !isNaN(n));
+
+  return numbers;
 }
 
 export const hexToRgba = (hex: string, a?: number): string => {
