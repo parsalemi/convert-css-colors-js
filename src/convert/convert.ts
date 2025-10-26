@@ -99,7 +99,7 @@ export const rgbaToHsla = (rgba: string, a?: number): string => {
   return a ? `hsla(${H}, ${S}%, ${L}%, ${a})` : alpha ? `hsla(${H}, ${S}%, ${L}%, ${alpha})` : `hsl(${H}, ${S}%, ${L}%)`;
 }
 
-export const hslaToRgba = (hsla: string): string => {
+export const hslaToRgba = (hsla: string, alpha?: number): string => {
   const numbers = string2numberArr(hsla);
   let r,g,b;
   const [h, s, l, a] = numbers;
@@ -125,11 +125,11 @@ export const hslaToRgba = (hsla: string): string => {
 
   let p = 2 * lDecimal - q;
 
-  r = hue2rgb(p, q, hDecimal + 1 / 3) * 255;
-  g = hue2rgb(p, q, hDecimal) * 255;
-  b = hue2rgb(p, q, hDecimal - 1 / 3) * 255;
+  r = Math.round(hue2rgb(p, q, hDecimal + 1 / 3) * 255);
+  g = Math.round(hue2rgb(p, q, hDecimal) * 255);
+  b = Math.round(hue2rgb(p, q, hDecimal - 1 / 3) * 255);
 
-  return a ? `rgba(${r}, ${g}, ${b}, ${a})` : `rgb(${r}, ${g}, ${b})`;
+  return alpha ? `rgba(${r}, ${g}, ${b}, ${alpha})` : a ? `rgba(${r}, ${g}, ${b}, ${a})` : `rgb(${r}, ${g}, ${b})`;
 }
 
 export const hexToHsla = (hex: string, a?: number): string => {
