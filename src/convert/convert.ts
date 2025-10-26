@@ -76,7 +76,7 @@ export const rgbaToHex = (rgba: string, alpha?: number): string => {
   return `#${rHex}${gHex}${bHex}${aHex}`
 }
 
-export const rgbaToHsla = (rgba: string): string => {
+export const rgbaToHsla = (rgba: string, a?: number): string => {
   const numbers = string2numberArr(rgba);
   const [red, green, blue, alpha] = numbers;
   let r = red / 255;
@@ -96,7 +96,7 @@ export const rgbaToHsla = (rgba: string): string => {
   let S = Math.round(s * 100);
   let L = Math.round(l * 100);
 
-  return alpha ? `hsl(${H}, ${S}%, ${L}%, ${alpha})` : `hsl(${H}, ${S}%, ${L}%)`;
+  return a ? `hsla(${H}, ${S}%, ${L}%, ${a})` : alpha ? `hsla(${H}, ${S}%, ${L}%, ${alpha})` : `hsl(${H}, ${S}%, ${L}%)`;
 }
 
 export const hslaToRgba = (hsla: string): string => {
