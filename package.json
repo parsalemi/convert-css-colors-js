@@ -1,11 +1,10 @@
 {
   "name": "convert-css-colors-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A package you can simply convert CSS colors in javascript or typescript projects. I will add new convert methods soon.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  
   "scripts": {
     "compile": "rm -rf dist/lib && tsc && tsc --build tsconfig.es5.json",
     "build": "tsup"
