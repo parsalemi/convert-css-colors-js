@@ -17,8 +17,8 @@ function number2hex(n: number): string {
 function string2numberArr(rgba: string): number[] {
   return rgba.replace('(', '').replace(')', '')
   .replace('rgba', '').replace('rgb', '')
-  .replace(',', '').replace('/', '')
-  .replace('hsl', '').replace('hsla', '')
+  .replaceAll(',', '').replace('/', '')
+  .replace('hsl', '').replace('hsla', '').replaceAll('%', '')
   .split(' ').map(string => parseInt(string));
 }
 
@@ -80,7 +80,7 @@ export const rgbaToHsla = (rgba: string): string => {
   let S = Math.round(s * 100);
   let L = Math.round(l * 100);
 
-  return alpha ? `hsl(${H}, ${S}, ${L}, ${alpha})` : `hsl(${H}, ${S}, ${L})`;
+  return alpha ? `hsl(${H}, ${S}%, ${L}%, ${alpha})` : `hsl(${H}, ${S}%, ${L}%)`;
 }
 
 export const hslaToRgba = (hsla: string): string => {
@@ -140,9 +140,9 @@ export const hexToHsla = (hex: string, a?: number): string => {
   let s = h;
   let l = h;
 
-  if (max === min) {
+  if ((max === min && alpha) || (max === min) && a) {
     // Achromatic
-    return `hsla(0, 0, ${l}, ${alpha})`;
+    return alpha ? `hsla(0, 0%, ${l}%, ${alpha})` : a ? `hsla(0, 0%, ${l}%, ${a})` : `hsl(0, 0%, ${l}%)`;
   }
 
   const d = max - min;
@@ -166,7 +166,7 @@ export const hexToHsla = (hex: string, a?: number): string => {
   l = Math.round(l);
   h = Math.round(360 * h);
 
-  return a ? `hsla(${h}, ${s}, ${l}, ${a})` : `hsla(${h}, ${s}, ${l}, ${alpha})`;
+  return a ? `hsla(${h}, ${s}%, ${l}%, ${a})` : alpha ? `hsla(${h}, ${s}%, ${l}%, ${alpha})` : `hsl(${h}, ${s}%, ${l}%)`;
 }
 
 export const hslaToHex = (hsla: string): string => {
