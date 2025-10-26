@@ -196,7 +196,7 @@ export const hexToHsla = (hex: string, a?: number): string => {
   return alpha !== undefined ? `hsla(${H}, ${S}%, ${L}%, ${alpha})` : `hsl(${H}, ${S}%, ${L}%)`;
 }
 
-export const hslaToHex = (hsla: string): string => {
+export const hslaToHex = (hsla: string, alpha?: number): string => {
   const hslaArr = string2numberArr(hsla);
   let [h, s, l, a] = hslaArr;
   s /= 100;
@@ -232,5 +232,7 @@ export const hslaToHex = (hsla: string): string => {
   const bHex = toHex(b);
   const aHex = Math.round(a * 255).toString(16).padStart(2, "0");
 
-  return a ? `#${rHex}${gHex}${bHex}${aHex}` : `#${rHex}${gHex}${bHex}`;
+  return alpha ? `#${rHex}${gHex}${bHex}${Math.round(alpha * 255).toString(16).padStart(2, '0')}` 
+  : a ? `#${rHex}${gHex}${bHex}${aHex}` 
+  : `#${rHex}${gHex}${bHex}`;
 }
