@@ -40,29 +40,19 @@ export const hexToRgba = (hex: string, a?: number): string => {
   return a ? `rgb(${r}, ${g}, ${b}, ${a})` : `rgb(${r}, ${g}, ${b})`;
 }
 
-export const rgbaToHex = (rgba: string): string => {
+export const rgbaToHex = (rgba: string, alpha?: number): string => {
   const numbers = string2numberArr(rgba);
-  let rHex, gHex, bHex;
+  let [r, g, b, a] = numbers;
+  let rHex, gHex, bHex, aHex;
 
-  if(numbers.length === 3) {
-    let [r, g, b] = numbers;
-    rHex = number2hex(r);
-    gHex = number2hex(g);
-    bHex = number2hex(b);
+  rHex = number2hex(r);
+  gHex = number2hex(g);
+  bHex = number2hex(b);
+  aHex = alpha ? Math.round(alpha * 255).toString(16).padStart(2, '0') 
+  : a ? Math.round(a * 255).toString(16).padStart(2, '0')
+  : '';
 
-    return `#${rHex}${gHex}${bHex}`;
-
-  } else if(numbers.length === 4) {
-    let [r, g, b, a] = numbers;
-    rHex = number2hex(r);
-    gHex = number2hex(g);
-    bHex = number2hex(b);
-    let aHex = Math.round(a * 255).toString(16).padStart(2, '0');
-
-    return `#${rHex}${gHex}${bHex}${aHex}`
-  }
-
-  return 'Error: format is not correct!';
+  return `#${rHex}${gHex}${bHex}${aHex}`
 }
 
 export const rgbaToHsla = (rgba: string): string => {
