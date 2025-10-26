@@ -113,7 +113,7 @@ export const hslaToRgba = (hsla: string): string => {
   g = hue2rgb(p, q, hDecimal) * 255;
   b = hue2rgb(p, q, hDecimal - 1 / 3) * 255;
 
-  return `rgba(${r}, ${g}, ${b}, ${a})`;
+  return a ? `rgba(${r}, ${g}, ${b}, ${a})` : `rgb(${r}, ${g}, ${b})`;
 }
 
 export const hexToHsla = (hex: string, a?: number): string => {
